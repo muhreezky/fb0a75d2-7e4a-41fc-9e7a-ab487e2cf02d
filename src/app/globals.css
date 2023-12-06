@@ -28,7 +28,7 @@ body {
 
 @layer components {
   button {
-    @apply transition-all cursor-pointer rounded-lg hover:shadow-lg text-base p-4 bg-gray-700 text-white hover:bg-gray-800 active:scale-90 shadow-md;
+    @apply transition-all uppercase font-semibold cursor-pointer rounded-lg hover:shadow-lg text-base p-2 bg-gray-700 text-white hover:bg-gray-800 active:scale-90 shadow-md;
   }
 
   button.red {
@@ -39,12 +39,24 @@ body {
     @apply bg-blue-700 hover:bg-blue-800;
   }
 
+  button.green {
+    @apply bg-green-700 hover:bg-green-800;
+  }
+
+  button.yellow {
+    @apply bg-yellow-700 hover:bg-yellow-800;
+  }
+
+  button.orange {
+    @apply bg-orange-700 hover:bg-orange-800;
+  }
+
   table {
     @apply border-2 rounded-lg border-black;
   }
 
   thead {
-    @apply bg-blue-400 text-white;
+    @apply bg-blue-500 text-white;
   }
 
   tbody {

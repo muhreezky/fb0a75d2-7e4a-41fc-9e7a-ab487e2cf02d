@@ -1,3 +1,4 @@
+"use client";
 import { Product } from "@/types/product";
 
 type TableContent = {
@@ -5,20 +6,21 @@ type TableContent = {
 };
 
 type TableProps = {
-	heads: string[];
+	heads?: string[];
 	contents: TableContent[];
-	objKeys: string[];
+	objKeys?: string[];
 	rowClick?: () => void;
 };
 
 function Table(props: TableProps) {
 	const { heads, contents, objKeys, rowClick } = props;
+	const defaultHeads = Object.keys(contents[0]).map(k => k.toUpperCase());
 	return (
-		<div className="overflow-x-scroll w-full">
+		<div className="overflow-x-scroll w-full rounded-lg">
 			<table className="min-w-max text-left w-full table-auto">
 				<thead>
 					<tr>
-						{heads.map((head, key) => (
+						{(heads || defaultHeads).map((head, key) => (
 							<th
 								key={key}
 								className="py-2 px-5 underline border-b border-r border-blue-gray-50"
@@ -35,16 +37,16 @@ function Table(props: TableProps) {
 								<tr
 									key={key}
 									id={content.id as string}
-									className="hover:cursor-pointer border-r hover:bg-blue-gray-100"
+									className="hover:cursor-pointer border-r hover:bg-gray-400 hover:text-gray-200 transition-all"
 								>
-									{objKeys.map((c, ind) => (
+									{(objKeys || Object.keys(contents[0])).map((c, ind) => (
 										<td
 											data-key={c}
 											className={"py-3 px-5"}
 											onClick={rowClick}
 											key={ind}
 										>
-											{content[c]}
+											{typeof content[c] !== "object" ? content[c] : content[c].join(", ")}
 										</td>
 									))}
 								</tr>
