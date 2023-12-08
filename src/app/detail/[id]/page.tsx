@@ -1,4 +1,5 @@
 import { getProductById } from "@/actions/products";
+import MyImage from "@/components/MyImage";
 import Image from "next/image";
 
 type PageProps = {
@@ -22,7 +23,7 @@ async function page({ params }: PageProps) {
 			</div>
 	    <div className="flex flex-row gap-3 overflow-x-auto">
 				{data.images.map((src, key) => (
-	        <Image
+	        <MyImage
 	        	key={key}
 	        	className="rounded-xl object-contain w-[500px] h-[400px]"
 	          alt="Mountains"

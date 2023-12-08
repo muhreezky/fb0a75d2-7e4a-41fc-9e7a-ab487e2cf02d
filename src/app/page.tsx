@@ -1,6 +1,5 @@
 import Table from '@/components/Table';
 import Settings from '@/components/Settings';
-import { JsonSchema } from '@/types/json-schema';
 import { getCategories, getProducts } from '@/actions/products';
 
 type PageProps = {
@@ -8,6 +7,20 @@ type PageProps = {
     [key: string]: string | undefined;
   }
 }
+
+const heads = [
+  "id", 
+  "title", 
+  "description", 
+  "price", 
+  "discountPercentage",
+  "rating",
+  "stock",
+  "brand",
+  "category",
+  "thumbnail",
+  "images"
+];
 
 export default async function Home({ searchParams }: PageProps) {
   const { limit = 30, q, skip = 0, category } = searchParams;
@@ -21,7 +34,7 @@ export default async function Home({ searchParams }: PageProps) {
   return (
     <main>
       <Settings categories={categories} />
-      <Table contents={data.products} />
+      <Table objKeys={heads} contents={data.products} />
     </main>
   )
 }

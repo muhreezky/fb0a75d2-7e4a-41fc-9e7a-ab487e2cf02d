@@ -9,17 +9,17 @@ type SettingsProps = {
 }
 
 function Settings({ categories }: SettingsProps) {
-	const search = useSearchParams();
-	const [limit, setLimit] = useState<string>("30");
-	const [skip, setSkip] = useState<string>("0");
-	const [searchText, setSearchText] = useState("");
 	const router = useRouter();
 
 	const onSubmit = (e: SyntheticEvent) => {
-		const q = searchText ? `&q=${searchText}` : "";
-		const form = new FormData(e.currentTarget as HTMLFormElement);
 		e.preventDefault();
-		router.push(`/?limit=${limit || "30"}&skip=${skip || "0"}${q}&category=${form.get("category")}`);
+		const form = new FormData(e.currentTarget as HTMLFormElement);
+		const searchText = form.get("q");
+		const limit = form.get("limit") || "30";
+		const skip = form.get("skip") || "0";
+		const q = searchText ? `&q=${searchText}` : "";
+		const category = form.get("category");
+		router.push(`/?limit=${limit}&skip=${skip}${q}&category=${category}`);
 	}
 
 	return (
@@ -31,8 +31,6 @@ function Settings({ categories }: SettingsProps) {
 					name="limit"
 					min={0}
 					placeholder="Rows limit here..."
-					value={limit}
-					onChange={(e) => setLimit(e.target.value)}
 				/>
 				<Input
 					label="Skip"
@@ -40,16 +38,12 @@ function Settings({ categories }: SettingsProps) {
 					name="skip"
 					min={0}
 					placeholder="How many rows skipped..."
-					value={skip}
-					onChange={(e) => setSkip(e.target.value)}
 				/>
 				<Input
 					label="Search"
 					type="search"
 					name="q"
 					placeholder="Text to be searched here..."
-					value={searchText}
-					onChange={(e) => setSearchText(e.target.value)}
 				/>
 				<Combo options={["all", ...categories]} name="category" label="Category" />
 			</div>
