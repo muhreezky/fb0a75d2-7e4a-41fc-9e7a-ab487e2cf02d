@@ -1,19 +1,13 @@
 import Table from '@/components/Table';
-import { JsonSchema } from '../../json-schema';
-
-async function getProducts() {
-  const res = await fetch('https://dummyjson.com/products');
-  const json = await res.json();
-  return json as JsonSchema;
-}
+import Settings from '@/components/Settings';
+import { JsonSchema } from '@/types/json-schema';
+import { getProducts } from '@/actions/products';
 
 export default async function Home() {
-  const data = await getProducts();
+  const data = await getProducts({ limit: 30, searchText: "", skip: 0 });
   return (
-    <main className="flex min-h-screen flex-col items-center p-7 gap-4">
-      <button className="blue">
-        Click Me
-      </button>
+    <main>
+      <Settings />
       <Table contents={data.products} />
     </main>
   )
