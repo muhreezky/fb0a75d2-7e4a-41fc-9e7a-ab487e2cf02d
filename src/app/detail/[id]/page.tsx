@@ -1,6 +1,6 @@
 import { getProductById } from "@/actions/products";
 import MyImage from "@/components/MyImage";
-import Image from "next/image";
+import Rating from "@/components/Rating";
 
 type PageProps = {
 	params: {
@@ -19,7 +19,12 @@ async function page({ params }: PageProps) {
 					<div className="text-sm">{data.description}</div>
 					<div className="text-sm font-bold">Stocks : {data.stock}</div>
 				</div>
-				<div className="text-2xl font-extrabold">${data.price}</div>
+				<div className="flex flex-col items-end">
+					<div className="text-2xl font-extrabold">${data.price}</div>
+					<div className="text-xl font-bold">
+						<Rating value={data.rating} />
+					</div>
+				</div>
 			</div>
 	    <div className="flex flex-row gap-3 overflow-x-auto">
 				{data.images.map((src, key) => (

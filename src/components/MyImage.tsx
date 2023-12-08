@@ -17,7 +17,7 @@ export default function MyImage(props: MyImageProps) {
   return (
     <Image
       className={`${props.className} hover:cursor-pointer`}
-      onClick={() => Swal.fire({ imageUrl: props.src, title: "Image Preview" })}
+      onClick={() => Swal.fire({ imageUrl: props.src })}
       alt={props.alt}
       src={props.src}
       width={props.width}
