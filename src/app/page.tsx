@@ -1,13 +1,26 @@
 import Table from '@/components/Table';
 import Settings from '@/components/Settings';
 import { JsonSchema } from '@/types/json-schema';
-import { getProducts } from '@/actions/products';
+import { getCategories, getProducts } from '@/actions/products';
 
-export default async function Home() {
-  const data = await getProducts({ limit: 30, searchText: "", skip: 0 });
+type PageProps = {
+  searchParams: {
+    [key: string]: string | undefined;
+  }
+}
+
+export default async function Home({ searchParams }: PageProps) {
+  const { limit = 30, q, skip = 0, category } = searchParams;
+  const data = await getProducts({ 
+    limit, 
+    searchText: q, 
+    skip,
+    category
+  });
+  const categories = await getCategories();
   return (
     <main>
-      <Settings />
+      <Settings categories={categories} />
       <Table contents={data.products} />
     </main>
   )

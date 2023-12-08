@@ -56,6 +56,6 @@
   }
 
   main {
-    @apply flex flex-col items-center p-7 gap-4;
+    @apply flex flex-col p-7 gap-4;
   }
 }

@@ -15,7 +15,7 @@ type TableProps = {
 
 function Table(props: TableProps) {
 	const { heads, contents, objKeys, onRowClick } = props;
-	const defaultHeads = Object.keys(contents[0])
+	const defaultHeads = Object.keys(contents[0]);
 	const router = useRouter();
 	return (
 		<div className="overflow-x-scroll w-full rounded-lg">
