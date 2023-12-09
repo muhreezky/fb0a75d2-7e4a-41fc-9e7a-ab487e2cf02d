@@ -1,10 +1,10 @@
 "use client";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import Input from "./Input";
 import { useFormStatus } from "react-dom";
 import Swal from "sweetalert2";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Product } from "@/types/product";
 
 export type FormInput = {
@@ -12,35 +12,41 @@ export type FormInput = {
   type: string;
   label: string;
   required?: boolean;
+  value?: string;
+  defaultValue?: string;
 };
 
 type FormModalProps = {
   inputs: FormInput[];
   title: string;
   open: boolean;
-  editId?: string | number;
-  action: (formData: FormData) => Product;
+  editData?: Product;
+  action: (formData: FormData) => Promise<Product>;
   onClose: () => void;
 };
 
 export default function FormModal(props: FormModalProps) {
   const { pending } = useFormStatus();
-  const router = useRouter();
+  const { id } = useParams();
 
   const defaultAction = async (formData: FormData) => {
     if (!props.action) return null;
+    if (props.editData) {
+      formData.append("id", id as string);
+      console.log(id);
+    }
     const json = await props.action(formData);
     Swal.fire({
-      title: "Create Success",
+      title: props.editData ? "Edit Success" : "Create Success",
       icon: "success",
       html: `
-        ID: <b>${json.id}</b><br />
         Product Name: <b>${json.title}</b><br />
         Description: <b>${json.description}</b><br />
-      `
+        Price: <b>$${json.price}</b>
+      `,
+      imageUrl: json.thumbnail
     }).then(() => {
       props.onClose();
-      router.push("/");
     });
   }
   return (
@@ -75,12 +81,6 @@ export default function FormModal(props: FormModalProps) {
                       {props.title}
                     </Dialog.Title>
                     <div className="mt-2 flex flex-col gap-2">
-                      <input
-                        type="hidden"
-                        name="id"
-                        readOnly
-                        value={props.editId as string}
-                      />
                       {props.inputs.map((val, key) => (
                         <Input key={`${val.name}-${key}`} {...val} />
                       ))}

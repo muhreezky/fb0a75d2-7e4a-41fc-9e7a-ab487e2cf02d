@@ -57,11 +57,13 @@ export async function editProduct(formData: FormData) {
 	const obj: { [key: string]: any } = {};
 	formData.forEach((value, key) => obj[key] = value);
 	obj.images = [obj.thumbnail];
-	const res = await fetch(`https://dummyjson.com/products/${obj.id}`, {
+	console.log(obj);
+	const res = await fetch(`https://dummyjson.com/products/${formData.get("id")}`, {
 		headers,
 		method: "PUT",
 		body: JSON.stringify(obj)
 	});
 	const json: Product = await res.json();
+	console.log(json);
 	return json;
 }

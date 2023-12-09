@@ -1,4 +1,7 @@
 import { getProductById } from "@/actions/products";
+import inputs from "@/app/inputs";
+import CreateProduct from "@/components/CreateProduct";
+import { FormInput } from "@/components/FormModal";
 import MyImage from "@/components/MyImage";
 import Rating from "@/components/Rating";
 
@@ -8,9 +11,17 @@ type PageProps = {
 	};
 };
 
+const inp: FormInput[] = inputs.map(({ name, type, label }) => ({ 
+	required: false, 
+	name, 
+	type, 
+	label,
+}));
+
 async function page({ params }: PageProps) {
 	const { id } = params;
-	const data = await getProductById(id);
+	const data: any = await getProductById(id);
+	inp.forEach(i => i.defaultValue = data[i.name]);
 	return (
 		<main className="p-5">
 			<div className="flex justify-between items-center gap-5">
@@ -30,7 +41,7 @@ async function page({ params }: PageProps) {
 				</div>
 			</div>
 	    <div className="flex flex-row gap-3 overflow-x-auto">
-				{data?.images?.map((src, key) => (
+				{data?.images?.map((src: string, key: number) => (
 	        <MyImage
 	        	key={key}
 	        	className="rounded-xl object-contain w-[500px] h-[400px]"
@@ -42,6 +53,7 @@ async function page({ params }: PageProps) {
 	        />
 				))}
 	    </div>
+			<CreateProduct inputs={inp} editData={data} />
 		</main>
 	);
 }
