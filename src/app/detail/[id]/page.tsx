@@ -1,6 +1,7 @@
 import { getProductById } from "@/actions/products";
 import inputs from "@/app/inputs";
 import CreateProduct from "@/components/CreateProduct";
+import DeleteProduct from "@/components/DeleteProduct";
 import { FormInput } from "@/components/FormModal";
 import MyImage from "@/components/MyImage";
 import Rating from "@/components/Rating";
@@ -45,7 +46,7 @@ async function page({ params }: PageProps) {
 	        <MyImage
 	        	key={key}
 	        	className="rounded-xl object-contain w-[500px] h-[400px]"
-	          alt="Mountains"
+	          alt={data.title}
 	          src={src}
 	          width={500}
 	          height={400}
@@ -54,6 +55,7 @@ async function page({ params }: PageProps) {
 				))}
 	    </div>
 			<CreateProduct inputs={inp} editData={data} />
+			<DeleteProduct id={id} />
 		</main>
 	);
 }

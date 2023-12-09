@@ -11,6 +11,11 @@ type GetProductsProps = {
 	category?: string;
 };
 
+type DeletedProduct = Product & {
+	isDeleted: boolean;
+	deletedOn: string;
+}
+
 const init: RequestInit = {
 	cache: "force-cache"
 }
@@ -44,7 +49,7 @@ export async function addProduct(formData: FormData) {
 	const obj: { [key: string]: any } = {};
 	formData.forEach((value, key) => obj[key] = value);
 	obj.images = [obj.thumbnail];
-	const res = await fetch("https://dummyjson.com/products/add", { 
+	const res = await fetch(`${base}/add`, { 
 		headers,
 		method: "POST",
 		body: JSON.stringify(obj)
@@ -57,13 +62,21 @@ export async function editProduct(formData: FormData) {
 	const obj: { [key: string]: any } = {};
 	formData.forEach((value, key) => obj[key] = value);
 	obj.images = [obj.thumbnail];
-	console.log(obj);
-	const res = await fetch(`https://dummyjson.com/products/${formData.get("id")}`, {
+	const res = await fetch(`${base}/${formData.get("id")}`, {
 		headers,
 		method: "PUT",
 		body: JSON.stringify(obj)
 	});
 	const json: Product = await res.json();
+	console.log(json);
+	return json;
+}
+
+export async function deleteProduct(id: string | number) {
+	const res = await fetch(`${base}/${id}`, {
+		method: "DELETE"
+	});
+	const json: DeletedProduct = await res.json();
 	console.log(json);
 	return json;
 }
