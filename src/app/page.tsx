@@ -1,4 +1,4 @@
-import Table from '@/components/Table';
+import ProductsList from '@/components/ProductsList';
 import Settings from '@/components/Settings';
 import { getCategories, getProducts } from '@/actions/products';
 import CreateProduct from '@/components/CreateProduct';
@@ -37,7 +37,7 @@ export default async function Home({ searchParams }: PageProps) {
     <main>
       <Settings categories={categories} />
       <CreateProduct inputs={inputs} />
-      <Table objKeys={heads} contents={data.products} />
+      <ProductsList objKeys={heads} contents={data.products} />
     </main>
   )
 }

@@ -2,7 +2,7 @@ import React from 'react'
 
 function Footer() {
 	return (
-		<footer className="mt-auto shadow-lg rounded-t-lg bg-blue-500 text-white p-5 flex justify-between flex-wrap items-center">
+		<footer className="mt-auto shadow-lg rounded-t-lg bg-blue-600 text-white p-5 flex justify-between flex-wrap items-center">
 			<div className="font-bold">
 				Created by Muhammad Rizkiansyah
 			</div>
