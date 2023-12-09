@@ -19,6 +19,10 @@
     @apply !bg-green-700 hover:!bg-green-800;
   }
 
+  .btn-transparent {
+    @apply !bg-transparent hover:!bg-gray-200 hover:opacity-80;
+  }
+
   .btn-yellow {
     @apply !bg-yellow-500 text-black hover:!bg-yellow-600;
   }

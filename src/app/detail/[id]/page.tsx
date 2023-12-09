@@ -32,7 +32,7 @@ async function page({ params }: PageProps) {
 					<div className="text-sm font-bold">Stocks : {data.stock}</div>
 				</div>
 				<div className="flex flex-col items-end">
-					<div className="text-2xl font-extrabold">${data.price}</div>
+					<div className="text-2xl font-extrabold">USD {data.price}</div>
 					<div className="text-md font-bold">
 						{data.discountPercentage}% Off
 					</div>
